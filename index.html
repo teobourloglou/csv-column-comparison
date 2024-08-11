@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Biology</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="./app.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+    <body x-data="" class="bg-emerald-50">
+        <div class="w-full h-screen flex flex-col gap-y-12 justify-center items-center">
+            <h1 class="text-center text-3xl text-emerald-700 font-bold">CSV Column Comparison</h1>
+            <input class="p-8 rounded-2xl border-2 border-emerald-700" accept=”.csv” type="file" name="csvData" id="csvData">
+            <button @click="runCalculation()" class="rounded-2xl bg-emerald-700 px-4 py-2 text-xl text-emerald-50 font-bold">Calculate</button>
+            <pre id="output">
+
+            </pre>
+        </div>
+    </body>
+</html>
