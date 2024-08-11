@@ -36,15 +36,17 @@ function parseCSV(data) {
 
     for (let i = 0; i < headers.length; i++) {
         for (let j = 0; j < headers.length; j++) {
+            let elements = [];
             arrays[i].map((row, index) => {
                 if (row == arrays[j][index] && i != j) {
-                    results.push([headers[i], i, headers[j], row]);
+                    elements.push(row);
                 }
-            })
+            });
+            if (elements.length != 0) {
+                results.push([headers[i], headers[j], elements.length, elements])
+            }
         }
     }
 
     return results;
 }
-
-// Όνομα πρώτης λίστας - Όνομα δεύτερης λίστας - Αριθμός Κοινών Στοιχείων - Κοινά στοιχεία
