@@ -43,7 +43,7 @@ function parseCSV(data) {
                 }
             });
             if (elements.length != 0) {
-                results.push([headers[i], headers[j], elements.length, elements])
+                results.push([headers[i], headers[j], elements.length, elements, i, j])
             }
         }
     }
