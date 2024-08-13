@@ -8,8 +8,8 @@
         <script src="./app.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body x-data="{ results : ''}">
-        <div class="bg-emerald-700">
+    <body x-data="{ results : [] }">
+        <div class="bg-emerald-800">
             <div class="relative flex lg:flex-row flex-col">
               <div class="mx-auto lg:w-1/2 w-full max-w-7xl">
                 <div class="relative z-10 pt-14 lg:w-full lg:max-w-2xl">
@@ -19,34 +19,52 @@
                       <p class="mt-6 text-lg leading-8 text-emerald-100">Upload a CSV file that will compare every column combination and find the common rows</p>
                       <div class="mt-10 flex lg:flex-row flex-col items-start lg:items-center justify-start gap-6">
                         <input accept=”.csv” type="file" name="csvData" id="csvData">
-                        <button @click="runCalculation().then(data => results = data)" class="rounded-xl bg-emerald-50 shadow hover:bg-emerald-100 hover:translate-y-0.5 transition-transform duration-300 px-4 py-2 text-xl text-emerald-700 font-bold">Calculate</button>
+                        <div class="group relative">
+							<button @click="runCalculation().then(data => results = data)" class="rounded-xl z-10 bg-emerald-50 shadow flex justify-center gap-x-1 items-center hover:bg-emerald-100 hover:translate-y-0.5 transition-transform duration-300 px-4 py-2 text-xl text-emerald-700 font-bold">
+								<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calculator"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 7m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z" /><path d="M8 14l0 .01" /><path d="M12 14l0 .01" /><path d="M16 14l0 .01" /><path d="M8 17l0 .01" /><path d="M12 17l0 .01" /><path d="M16 17l0 .01" /></svg>
+								<span>Calculate</span>
+							</button>
+							<svg class="absolute left-1/2 top-1/2 group-hover:-translate-y-16 group-hover:-translate-x-8 group-hover:-rotate-12 text-emerald-200 -z-10 duration-500 transition-transform"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-root-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 12h1c1 0 1 1 2.016 3.527c.984 2.473 .984 3.473 1.984 3.473h1" /><path d="M12 19c1.5 0 3 -2 4 -3.5s2.5 -3.5 4 -3.5" /><path d="M3 12h1l3 8l3 -16h10" /></svg>
+							<svg class="absolute right-1/2 top-1/2 group-hover:translate-y-12 group-hover:translate-x-12 group-hover:rotate-12 text-emerald-200 -z-10 duration-500 transition-transform" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-variable"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4c-2.5 5 -2.5 10 0 16m14 -16c2.5 5 2.5 10 0 16m-10 -11h1c1 0 1 1 2.016 3.527c.984 2.473 .984 3.473 1.984 3.473h1" /><path d="M8 16c1.5 0 3 -2 4 -3.5s2.5 -3.5 4 -3.5" /></svg>
+							<span class="absolute left-1/2 top-1/2 group-hover:-translate-y-14 font-bold text-lg group-hover:translate-x-8 group-hover:rotate-12 text-emerald-200 -z-10 duration-500 transition-transform">12</span>
+						</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="bg-emerald-100 w-full lg:w-1/2 min-h-screen">
-                <div class="w-full h-full flex justify-center items-center py-16 px-8">
-                    <div class="bg-emerald-200 overflow-scroll flex flex-col gap-y-2 rounded-xl h-full w-full p-2 border-2 border-emerald-700">
+				  <div class="w-full h-full flex justify-center items-center py-[5vh] px-8">
+					  <div class="overflow-y-scroll overflow-x-visible flex flex-col gap-y-2 max-h-[90vh] w-full">
+						<div x-show="results.length == 0" class="relative block w-5/6 mx-auto rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+							<svg class="mx-auto opacity-50 h-12 w-12 text-emerald-700" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-excel"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /><path d="M10 12l4 5" /><path d="M10 17l4 -5" /></svg>
+							<span class="mt-2 opacity-50 block text-sm font-semibold text-emerald-700">No results yet</span>
+						  </div>
                         <template x-for="result in results">
-                            <div class="bg-emerald-700 p-2 text-emerald-50 rounded-lg flex justify-between flex-wrap gap-y-2">
-                                <span class="flex gap-x-2 w-full lg:w-1/3">
-                                    <span class="bg-emerald-200 rounded-md px-1 text-emerald-700 text-sm">1st Column Heading:</span>
-                                    <span class="text-sm px-1" x-text="result[0]"></span>
+                          <div class="bg-white shadow-lg p-2 text-emerald-50 gap-2 rounded-xl">
+                            <div class=" flex justify-between gap-2">
+                                <span class="flex flex-col gap-y-2 w-full lg:w-1/2">
+                                    <span class="bg-emerald-100 rounded-md px-1 text-center text-emerald-700 text-sm">Column:</span>
+                                    <span class="text-sm text-gray-800 px-1" x-text="result[0]"></span>
                                 </span>
-                                <span class="flex gap-x-2 w-full lg:w-1/3">
-                                    <span class="bg-emerald-200 rounded-md px-1 text-emerald-700 text-sm">2nd Column Heading:</span>
-                                    <span class="text-sm px-1" x-text="result[1]"></span>
+                                <span class="flex flex-col gap-y-2 w-full lg:w-1/2">
+                                    <span class="bg-emerald-100 rounded-md px-1 text-center text-emerald-700 text-sm">Column:</span>
+                                    <span class="text-sm text-gray-800 px-1" x-text="result[1]"></span>
                                 </span>
-                                <span class="flex gap-x-2 w-full lg:w-1/3">
-                                    <span class="bg-emerald-200 rounded-md px-1 text-emerald-700 text-sm">Common Rows Number:</span>
-                                    <span class="text-sm px-1" x-text="result[2]"></span>
+                              </div>
+                                <span class="flex gap-y-2 pt-2 flex-col w-full">
+									<span class="bg-emerald-100 rounded-md px-1 items-center flex justify-between text-emerald-700 text-sm">
+										<span class="w-1/3"></span>
+										<span class="w-1/3 text-center">Common Rows:</span>
+										<span class="text-xs w-1/3 text-right">Total: <span x-text="result[2]"></span></span>
+									</span>
+                                    <span class="text-sm gap-x-1 flex justify-start items-center text-gray-800">
+										<template x-for="item in result[3]">
+											<span class="bg-emerald-100 text-emerald-800 rounded-md px-1 text-centere" x-text="item"></span>
+										</template>
+									</span>
                                 </span>
-                                <span class="flex gap-x-2 w-full">
-                                    <span class="bg-emerald-200 rounded-md px-1 text-emerald-700 text-sm">Common Rows:</span>
-                                    <span class="text-sm px-1" x-text="result[3]"></span>
-                                </span>
-                            </div>
+                          </div>
                         </template>
                     </div>
                 </div>

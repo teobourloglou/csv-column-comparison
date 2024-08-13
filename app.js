@@ -7,14 +7,14 @@ function runCalculation() {
 
             reader.onload = function (e) {
                 const results = parseCSV(e.target.result);
-                resolve(results); // Resolve the promise with the results
+                resolve(results);
             };
 
             reader.onerror = function() {
                 reject("Failed to read file");
             };
 
-            reader.readAsText(file); // Trigger the file reading
+            reader.readAsText(file);
 
         } else {
             reject("No file selected!");
@@ -24,7 +24,6 @@ function runCalculation() {
 
 
 function parseCSV(data) {
-    console.log(data)
     const rows          = data.split('\n').map(row => row.trim()).filter(row => row);
     const headers       = rows[0].split(',');
     const data_per_row  = rows.map(row => row.split(','));
@@ -49,5 +48,22 @@ function parseCSV(data) {
         }
     }
 
-    return results;
+
+    return removeDuplicatePairs(results);
+}
+
+function removeDuplicatePairs(pairs) {
+    const seen = new Set();
+    const uniquePairs = [];
+
+    pairs.forEach(pair => {
+        const sortedPair = pair.slice().sort().join(',');
+
+        if (!seen.has(sortedPair)) {
+            seen.add(sortedPair);
+            uniquePairs.push(pair);
+        }
+    });
+
+    return uniquePairs;
 }
