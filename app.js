@@ -24,9 +24,10 @@ function runCalculation() {
 
 
 function parseCSV(data) {
+    console.log(data)
     const rows          = data.split('\n').map(row => row.trim()).filter(row => row);
-    const headers       = rows[0].split(';');
-    const data_per_row  = rows.map(row => row.split(';'));
+    const headers       = rows[0].split(',');
+    const data_per_row  = rows.map(row => row.split(','));
     const arrays        = [];
     const results       = [];
 
@@ -38,7 +39,7 @@ function parseCSV(data) {
         for (let j = 0; j < headers.length; j++) {
             let elements = [];
             arrays[i].map((row, index) => {
-                if (row == arrays[j][index] && i != j) {
+                if (row == arrays[j][index] && i != j && row != '') {
                     elements.push(row);
                 }
             });
