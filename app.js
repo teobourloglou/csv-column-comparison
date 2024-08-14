@@ -37,10 +37,12 @@ function parseCSV(data) {
     for (let i = 0; i < headers.length; i++) {
         for (let j = 0; j < headers.length; j++) {
             let elements = [];
-            arrays[i].map((row, index) => {
-                if (row == arrays[j][index] && i != j && row != '') {
-                    elements.push(row);
-                }
+            arrays[i].map((row_i, index_i) => {
+                arrays[j].map((row_j, index_j) => {
+                    if (row_i == row_j && i != j && row_i != '') {
+                        elements.push(row_i);
+                    }
+                })
             });
             if (elements.length != 0) {
                 results.push([headers[i], headers[j], elements.length, elements, i, j])
