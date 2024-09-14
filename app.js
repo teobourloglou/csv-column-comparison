@@ -62,13 +62,17 @@ function parseCSV(data) {
 
     const results = [];
 
+    const toggle = document.getElementById("toggle");
+
     // Compare each pair of columns to find common rows
     for (let i = 0; i < headers.length; i++) {
         for (let j = 0; j < headers.length; j++) {
             if (i !== j) {
-                const common = columns[i].filter(value =>
-                    columns[j].includes(value) && value !== ''
-                );
+                const common = columns[i].filter(value => {
+                    return toggle.checked
+                        ? !columns[j].includes(value) && value !== ''
+                        : columns[j].includes(value) && value !== '';
+                });
 
                 if (common.length > 0) {
                     results.push([headers[i], headers[j], common.length, common, i, j]);
@@ -122,7 +126,7 @@ const resultsToCSV = (results) => {
 
     csvData.unshift(titles);
 
-    const csvContent = csvData.map(row => 
+    const csvContent = csvData.map(row =>
         row.map(field => {
             const strField = String(field);
             return strField.includes(',') ? `"${strField}"` : strField;
