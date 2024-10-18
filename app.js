@@ -74,8 +74,12 @@ function parseCSV(data) {
                         : columns[j].includes(value) && value !== '';
                 });
 
+                const columnOneLength = columns[i].filter(value => value !== '').length;
+                const columnTwoLength = columns[j].filter(value => value !== '').length;
+                const similarityIndex = (common.length * 2) / (columnOneLength + columnTwoLength)
+
                 if (common.length > 0) {
-                    results.push([headers[i], headers[j], common.length, common, i, j]);
+                    results.push([headers[i], headers[j], common.length, similarityIndex, common, i, j,]);
                 }
             }
         }
@@ -97,7 +101,7 @@ function removeDuplicatePairs(pairs) {
     const uniquePairs = [];
 
     pairs.forEach(pair => {
-        const listNumbers = [pair[4], pair[5]]
+        const listNumbers = [pair[5], pair[6]]
         const sortedPair = listNumbers.slice().sort().join(',');
 
         if (!seen.has(sortedPair)) {
@@ -116,12 +120,12 @@ function removeDuplicatePairs(pairs) {
  * @param {Array} results - A 2D array where each sub-array represents a row of data.
  */
 const resultsToCSV = (results) => {
-    const titles = ['Column 1 Title', 'Column 2 Title', 'Total', 'Common Items'];
+    const titles = ['Column 1 Title', 'Column 2 Title', 'Total', 'Similarity Index', 'Common Items'];
     const csvData = results.map(result => result.slice());
 
     csvData.forEach(result => {
-        result.length = 4;
-        result[3] = result[3].join(",");
+        result.length = 5;
+        result[4] = result[4].join(",");
     });
 
     csvData.unshift(titles);
